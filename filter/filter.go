@@ -14,3 +14,10 @@ const (
 	// HTTPResponseFilter 只捕获HTTP响应流量
 	HTTPResponseFilter = "tcp[((tcp[12:1] & 0xf0) >> 2):4] = 0x48545450"
 )
+
+var FilterMap = map[string]string{
+	"n1": HTTPFilter,
+	"n2": HTTPNot443,
+	"n3": HTTPRequestFilter,
+	"n4": HTTPResponseFilter,
+}

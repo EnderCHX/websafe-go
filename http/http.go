@@ -12,7 +12,9 @@ extern void TcpCallBack(struct tcp_stream *tc, void **param);
 
 static void start_nids(char* dev, char* filter) {
 	nids_params.device = dev;
-	nids_params.pcap_filter = filter;
+	if (filter != "") {
+		nids_params.pcap_filter = filter;
+	}
 
 	struct nids_chksum_ctl temp;
 	temp.netaddr = 0;
@@ -105,6 +107,7 @@ func RunNids(dev, filter string) {
 	filter1 := C.CString(filter)
 	defer C.free(unsafe.Pointer(filter1))
 
+	logger.Info("开始捕获http")
 	logger.Info("使用网卡:" + dev + " 过滤规则:" + filter)
 	C.start_nids(dev1, filter1)
 }

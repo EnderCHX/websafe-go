@@ -23,9 +23,11 @@ static void run(char* dev, char* filter) {
 	char errbuf[1024];
 	pcap_t* device = pcap_open_live(dev,65535,1,0,errbuf);
 
-	struct bpf_program bpf_filter;
-	pcap_compile(device, &bpf_filter, filter, 0, 0);
-	pcap_setfilter(device, &bpf_filter);
+	if (filter != "") {
+		struct bpf_program bpf_filter;
+		pcap_compile(device, &bpf_filter, filter, 0, 0);
+		pcap_setfilter(device, &bpf_filter);
+	}
 
 	if(!device){
         printf("couldn't open the net device: %s\n",errbuf);
@@ -80,6 +82,7 @@ func EthernetCallBack(arg *C.uchar, pkthdr *C.struct_pcap_pkthdr, packet *C.ucha
 
 func RunEthernet(dev, filter string) {
 	logger = log.NewLogger("ethernet.log", "debug")
-
+	logger.Info("开始捕获ethernet")
+	logger.Info("使用网卡:" + dev + " 过滤规则:" + filter)
 	C.run(C.CString(dev), C.CString(filter))
 }
