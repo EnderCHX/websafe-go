@@ -97,11 +97,11 @@ func (e *Encoder) EncodeEntry(entry zapcore.Entry, fields []zapcore.Field) (*buf
 	buf.AppendString("\n")
 	return buf, nil
 }
-func Setup(path, loglevel string) {
-	Logger = NewLogger(path, loglevel)
+func Setup(title, path, loglevel string) {
+	Logger = NewLogger(title, path, loglevel)
 }
 
-func NewLogger(path, loglevel string) *zap.Logger {
+func NewLogger(title, path, loglevel string) *zap.Logger {
 	var level zap.AtomicLevel
 
 	if loglevel == "debug" {
@@ -133,12 +133,12 @@ func NewLogger(path, loglevel string) *zap.Logger {
 
 	core := zapcore.NewTee(
 		zapcore.NewCore(
-			&Encoder{Encoder: encoder, separator: "|", title: "[BLOG]"},
+			&Encoder{Encoder: encoder, separator: "|", title: title},
 			zapcore.AddSync(lumberjackLogger),
 			level,
 		),
 		zapcore.NewCore(
-			&Encoder{Encoder: encoder, separator: "", title: "[BLOG]", color: true},
+			&Encoder{Encoder: encoder, separator: "", title: title, color: true},
 			zapcore.AddSync(os.Stdout),
 			level,
 		),

@@ -81,7 +81,7 @@ func EthernetCallBack(arg *C.uchar, pkthdr *C.struct_pcap_pkthdr, packet *C.ucha
 }
 
 func RunEthernet(dev, filter string) {
-	logger = log.NewLogger("ethernet.log", "debug")
+	logger = log.NewLogger("[WEBSAFE]", "ethernet.log", "debug")
 	logger.Info("开始捕获ethernet")
 	logger.Info("使用网卡:" + dev + " 过滤规则:" + filter)
 	C.run(C.CString(dev), C.CString(filter))

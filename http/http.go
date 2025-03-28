@@ -99,7 +99,7 @@ func TcpCallBack(tc *C.struct_tcp_stream, param **C.void) {
 }
 func RunNids(dev, filter string) {
 
-	logger = log.NewLogger("http_capture.log", "debug")
+	logger = log.NewLogger("[WEBSAFE]", "http_capture.log", "debug")
 
 	dev1 := C.CString(dev)
 	defer C.free(unsafe.Pointer(dev1))

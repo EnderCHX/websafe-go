@@ -159,7 +159,7 @@ func Run(dev string) {
 	// 		logger.Error(fmt.Sprintf("%v", err))
 	// 	}
 	// }()
-	logger = log.NewLogger("security.log", "debug")
+	logger = log.NewLogger("[WEBSAFE]", "security.log", "debug")
 	logger.Info("开始捕获扫描攻击")
 	logger.Info("使用网卡:" + dev)
 	C.run(C.CString(dev))
